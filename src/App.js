@@ -48,24 +48,10 @@ function fetchData() {
             ReactDOM.render(<Graph />, document.getElementById('root'));
         });
 }
-//fetchData();
+
 
 class Graph extends Component {
-    state = { _data: {} }
 
-    componentDidMount() {
-        //fetch('https://hidden-island-35169.herokuapp.com/api/dailyDau')
-        //    .then(res => res.json())
-        //    .then(dauData => {
-        //        dauData.forEach(element => {
-        //            var date = new Date(element._id * 1000);
-        //            data.labels.push(date.toDateString())
-
-        //            data.datasets[0].data.push(element.Count);
-        //        });
-        //        this.setState({ data });
-        //    });
-    }
 
 
     render() {
@@ -79,7 +65,7 @@ class Graph extends Component {
                         fullWidth: false,
                         maintainAspectRatio: false,
                         responsive: false
-                    }}// = ?
+                    }}
                 />
             </div>
         )
