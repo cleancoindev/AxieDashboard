@@ -61,6 +61,35 @@ let podDataset = {
     width: 400,
 };
 
+let breedDataset = {
+    labels: [],
+    datasets: [
+        {
+            label: 'Axies bred per day',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: []
+        }
+    ],
+    height: 200,
+    width: 400,
+};
+let counter = 0;
 const options = {
     fullWidth: false,
     maintainAspectRatio: false
@@ -71,24 +100,43 @@ function fetchDauData() {
         .then(dauData => {
             dauData.forEach(element => {
                 var date = new Date(element._id * 1000);
-                dauDataset.labels.push(date.toDateString())
+                dauDataset.labels.push(date.toDateString().substring(4))
 
                 dauDataset.datasets[0].data.push(element.Count);
             });
-            ReactDOM.render(<Graph graphData={dauDataset} />, document.getElementById('root'));
+            //ReactDOM.render(<Graph graphData={dauDataset} />, document.getElementById('root'));
+            updateDataLoaded();
         });
     fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyPods')
         .then(res => res.json())
         .then(podData => {
             podData.forEach(element => {
                 var date = new Date(element._id * 1000);
-                podDataset.labels.push(date.toDateString())
+                podDataset.labels.push(date.toDateString().substring(4))
 
                 podDataset.datasets[0].data.push(element.Count);
             });
-            ReactDOM.render(<Graph graphData={podDataset} />, document.getElementById('root'));
+            //ReactDOM.render(<Graph graphData={podDataset} />, document.getElementById('root'));
+            updateDataLoaded();
+        });
+    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyBreeds')
+        .then(res => res.json())
+        .then(podData => {
+            podData.forEach(element => {
+                var date = new Date(element._id * 1000);
+                breedDataset.labels.push(date.toDateString().substring(4));
+
+                breedDataset.datasets[0].data.push(element.Count);
+            });
+            //ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
+            updateDataLoaded();
         });
     //ReactDOM.render(<Graph />, document.getElementById('root'));
+}
+
+function updateDataLoaded() {
+    counter++;
+    if (counter == 3) ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
 }
 
 function fetchPodData() {
@@ -122,6 +170,16 @@ class Graph extends Component {
                 />
                 <Line className="lineGraph"
                     data={podDataset}
+                    width={900}
+                    height={400}
+                    options={{
+                        fullWidth: false,
+                        maintainAspectRatio: false,
+                        responsive: false
+                    }}
+                />
+                <Line className="lineGraph"
+                    data={breedDataset}
                     width={900}
                     height={400}
                     options={{
