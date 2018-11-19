@@ -210,9 +210,9 @@ function fetchDauData() {
             var cumul = 0;
             podData.forEach(element => {
                 var date = new Date(element._id * 1000);
-                cumulBuyerDataset.labels.push(date.toDateString().substring(4));
+                cumulBattleDataset.labels.push(date.toDateString().substring(4));
                 cumul += element.Count;
-                cumulBuyerDataset.datasets[0].data.push(cumul);
+                cumulBattleDataset.datasets[0].data.push(cumul);
             });
             //ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
             updateDataLoaded();
