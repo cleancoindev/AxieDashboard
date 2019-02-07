@@ -148,6 +148,35 @@ let cumulBattleDataset = {
     width: 400,
 };
 
+let breedDatasetCumul = {
+    labels: [],
+    datasets: [
+        {
+            label: 'Axies bred per day Cumul',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: []
+        }
+    ],
+    height: 200,
+    width: 400,
+};
+
 
 let counter = 0;
 const options = {
@@ -218,12 +247,26 @@ function fetchDauData() {
             updateDataLoaded();
         });
 
+    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyBreedsCumul')
+        .then(res => res.json())
+        .then(podData => {
+            var cumul = 0;
+            podData.forEach(element => {
+                var date = new Date(element._id * 1000);
+                breedDatasetCumul.labels.push(date.toDateString().substring(4));
+                cumul += element.Count;
+                breedDatasetCumul.datasets[0].data.push(cumul);
+            });
+            //ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
+            updateDataLoaded();
+        });
+
     //ReactDOM.render(<Graph />, document.getElementById('root'));
 }
 
 function updateDataLoaded() {
     counter++;
-    if (counter == 5) ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
+    if (counter == 6) ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
 }
 
 function fetchPodData() {
@@ -287,6 +330,16 @@ class Graph extends Component {
                 />
                 <Line className="lineGraph"
                     data={cumulBattleDataset}
+                    width={900}
+                    height={400}
+                    options={{
+                        fullWidth: false,
+                        maintainAspectRatio: false,
+                        responsive: false
+                    }}
+                />
+                <Line className="lineGraph"
+                    data={breedDatasetCumul}
                     width={900}
                     height={400}
                     options={{
