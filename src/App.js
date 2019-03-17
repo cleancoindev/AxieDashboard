@@ -1,4 +1,4 @@
-import hi, { Line } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -179,12 +179,9 @@ let breedDatasetCumul = {
 
 
 let counter = 0;
-const options = {
-    fullWidth: false,
-    maintainAspectRatio: false
-};
+//'https://cors-anywhere.herokuapp.com/' +
 function fetchDauData() {
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyDau')
+    fetch( 'https://hidden-island-35169.herokuapp.com/api/dailyDau')
         .then(res => res.json())
         .then(dauData => {
             dauData.forEach(element => {
@@ -196,7 +193,7 @@ function fetchDauData() {
             //ReactDOM.render(<Graph graphData={dauDataset} />, document.getElementById('root'));
             updateDataLoaded();
         });
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyPods')
+    fetch('https://hidden-island-35169.herokuapp.com/api/dailyPods')
         .then(res => res.json())
         .then(podData => {
             podData.forEach(element => {
@@ -208,7 +205,7 @@ function fetchDauData() {
             //ReactDOM.render(<Graph graphData={podDataset} />, document.getElementById('root'));
             updateDataLoaded();
         });
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyBreeds')
+    fetch( 'https://hidden-island-35169.herokuapp.com/api/dailyBreeds')
         .then(res => res.json())
         .then(podData => {
             podData.forEach(element => {
@@ -220,7 +217,7 @@ function fetchDauData() {
             //ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
             updateDataLoaded();
         });
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/cumulUniqueBuyers')
+    fetch('https://hidden-island-35169.herokuapp.com/api/cumulUniqueBuyers')
         .then(res => res.json())
         .then(podData => {
             var cumul = 0;
@@ -233,7 +230,7 @@ function fetchDauData() {
             //ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
             updateDataLoaded();
         });
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/cumulDailyBattles')
+    fetch('https://hidden-island-35169.herokuapp.com/api/cumulDailyBattles')
         .then(res => res.json())
         .then(podData => {
             var cumul = 0;
@@ -247,7 +244,7 @@ function fetchDauData() {
             updateDataLoaded();
         });
 
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyBreedsCumul')
+    fetch('https://hidden-island-35169.herokuapp.com/api/dailyBreedsCumul')
         .then(res => res.json())
         .then(podData => {
             var cumul = 0;
@@ -266,11 +263,11 @@ function fetchDauData() {
 
 function updateDataLoaded() {
     counter++;
-    if (counter == 6) ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
+    if (counter === 6) ReactDOM.render(<Graph graphData={breedDataset} />, document.getElementById('root'));
 }
 
 function fetchPodData() {
-    fetch('https://cors-anywhere.herokuapp.com/' + 'https://hidden-island-35169.herokuapp.com/api/dailyPods')
+    fetch('https://hidden-island-35169.herokuapp.com/api/dailyPods')
         .then(res => res.json())
         .then(podData => {
             podData.forEach(element => {
